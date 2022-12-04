@@ -8,9 +8,15 @@
 import { dotenvConfig } from '../deps.ts';
 
 export const isDenoDeploy = Deno.env.get('DENO_DEPLOYMENT_ID') !== undefined;
+
+export const getSecretToken = () =>
+	Deno.env.get('WEBHOOK_SECRET') ||
+	dotenvConfig({ safe: true }).WEBHOOK_SECRET;
+
 export const getTelegramToken = () =>
 	Deno.env.get('TELEGRAM_BOT_TOKEN') ||
 	dotenvConfig({ safe: true }).TELEGRAM_BOT_TOKEN;
+
 export function replacer(
 	text: string,
 	replace: { [key: string]: string },

@@ -7,23 +7,26 @@
 
 import { Grammy, serveHttp } from './deps.ts';
 import { bot } from './src/bot.ts';
-import { isDenoDeploy } from './src/util.ts';
+import { getSecretToken, isDenoDeploy } from './src/util.ts';
+
+const secretKey = getSecretToken();
 
 if (isDenoDeploy) {
+	if (!secretKey) throw new Error('WEBHOOK_SECRET is needed!');
 	serveHttp(async (request) => {
 		if (request.method === 'POST') {
-			const url = new URL(request.url);
+			const secretRequest = request.headers.get(
+				'X-Telegram-Bot-Api-Secret-Token',
+			);
 
-			if (url.pathname.slice(1) === bot.token) {
-				try {
-					return await Grammy.webhookCallback(bot, 'std/http')(request);
-				} catch (err) {
-					console.error(err);
-				}
+			if (secretRequest !== secretKey) {
+				return new Response('verify fail', { status: 403 });
 			}
+
+			return await Grammy.webhookCallback(bot, 'std/http')(request);
 		}
 
-		return new Response();
+		return new Response('seems good');
 	});
 } else {
 	await bot.init();
