@@ -8,11 +8,11 @@
 import { Grammy } from '../../deps.ts';
 import { replacer } from '../util.ts';
 
-export const commonsComposer = new Grammy.Composer();
+const composer = new Grammy.Composer();
 const text =
-	'Hai {{full-name}}, saya adalah nayaka.\nSaya dapat membantu anda untuk memfilter kata, tautan, dan tagar pada grup anda dengan beberapa aturan yang dapat anda buat.\nSilakan tambahkan saya kegrup anda, dan jadikan saya administrator agar saya dapat bekerja dengan baik.';
+	'Hai {{full-name}}, saya adalah nayaka.\nSaya dapat membantu anda untuk memfilter kata, tautan, dan tagar pada grup anda dengan beberapa aturan yang dapat anda buat.\nSilakan tambahkan saya kegrup anda, dan jadikan saya administrator agar saya dapat bekerja dengan baik.\n\nDijalankan dengan Deno v{{deno-version}}';
 
-commonsComposer.command('start', async (ctx) => {
+composer.command('start', async (ctx) => {
 	if (ctx.chat.type !== 'private') return;
 	await ctx.reply(
 		replacer(text, {
@@ -29,3 +29,5 @@ commonsComposer.command('start', async (ctx) => {
 		},
 	);
 });
+
+export default composer;
