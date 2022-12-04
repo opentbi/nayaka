@@ -15,4 +15,4 @@ bot.use((ctx,next)=>{
   console.log("Update :",ctx)
   return next()
 })
-// bot.use(commonsComposer.middleware());
+bot.use(commonsComposer.middleware());

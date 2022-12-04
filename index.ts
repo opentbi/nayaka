@@ -15,7 +15,6 @@ if (isDenoDeploy) {
 	if (!secretKey) throw new Error('WEBHOOK_SECRET is needed!');
 	serveHttp(async (request) => {
 		if (request.method === 'POST') {
-		  console.log("Have post update",request)
 			return await Grammy.webhookCallback(
 				bot,
 				'std/http',
