@@ -40,13 +40,11 @@ async function writeCopyrightNotice(folder: string) {
 						path.resolve(folder, file.name),
 						new TextEncoder().encode(
 							copyrightNoticeText
-								.concat('\n')
 								.concat(
 									content.replace(
 										copyrightNoticeText,
 										'',
-									)
-										.trim(),
+									),
 								),
 						),
 					);
