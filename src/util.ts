@@ -11,3 +11,12 @@ export const isDenoDeploy = Deno.env.get('DENO_DEPLOYMENT_ID') !== undefined;
 export const getTelegramToken = () =>
 	Deno.env.get('TELEGRAM_BOT_TOKEN') ||
 	dotenvConfig({ safe: true }).TELEGRAM_BOT_TOKEN;
+export function replacer(
+	text: string,
+	replace: { [key: string]: string },
+): string {
+	for (const [key, value] of Object.entries(replace)) {
+		text = text.replace(new RegExp(key, 'gm'), value);
+	}
+	return text;
+}

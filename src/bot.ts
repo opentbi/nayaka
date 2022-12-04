@@ -5,15 +5,20 @@
  * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
  */
 
-import { Grammy } from '../deps.ts';
+import { Grammy, path } from '../deps.ts';
 import { getTelegramToken } from './util.ts';
 
 export const bot = new Grammy.Bot(getTelegramToken());
 
-bot.command(['start', 'help'], async (ctx) => {
-	await ctx.reply(`This bot is running on Deno v${Deno.version.deno}`, {
-		reply_markup: new Grammy.InlineKeyboard()
-			.url('Repository', 'https://github.com/opentbi/nayaka')
-			.url('TBI Organization', 'https://github.com/telegrambotindonesia'),
-	});
-});
+for (const file of Deno.readDirSync('./src/commands')) {
+	if (file.isFile && /\.(ts|js)$/.test(file.name)) {
+		try {
+			const composer = await import('./' + path.join('commands', file.name));
+			if (composer.default) {
+				bot.use(composer.default);
+			}
+		} catch {
+			continue;
+		}
+	}
+}
