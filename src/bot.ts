@@ -11,5 +11,8 @@ import { getTelegramToken } from './util.ts';
 import { commonsComposer } from './commands/commons.ts';
 
 export const bot = new Grammy.Bot(getTelegramToken());
-
+bot.use((ctx,next)=>{
+  console.log("Update :",ctx)
+  return next()
+})
 bot.use(commonsComposer.middleware());
