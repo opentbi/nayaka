@@ -5,4 +5,4 @@
  * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
 */
 
-export * from './environment';
+export ID from "./ID"
