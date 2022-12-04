@@ -12,4 +12,4 @@ import { commonsComposer } from './commands/commons.ts';
 
 export const bot = new Grammy.Bot(getTelegramToken());
 
-bot.use(commonsComposer);
+bot.use(commonsComposer.middleware());
