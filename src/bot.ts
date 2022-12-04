@@ -11,7 +11,7 @@ import { getTelegramToken } from './util.ts';
 export const bot = new Grammy.Bot(getTelegramToken());
 
 bot.command(['start', 'help'], async (ctx) => {
-	await ctx.reply(`This bot is running on Deno v${Deno.version}`, {
+	await ctx.reply(`This bot is running on Deno v${Deno.version.deno}`, {
 		reply_markup: new Grammy.InlineKeyboard()
 			.url('Repository', 'https://github.com/opentbi/nayaka')
 			.url('TBI Organization', 'https://github.com/telegrambotindonesia'),
