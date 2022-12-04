@@ -12,6 +12,10 @@ const composer = new Grammy.Composer();
 const text =
 	'Hai {{full-name}}, saya adalah nayaka.\nSaya dapat membantu anda untuk memfilter kata, tautan, dan tagar pada grup anda dengan beberapa aturan yang dapat anda buat.\nSilakan tambahkan saya kegrup anda, dan jadikan saya administrator agar saya dapat bekerja dengan baik.\n\nDijalankan dengan Deno v{{deno-version}}';
 
+composer.use((ctx,next)=>{
+  console.log("recv update",ctx)
+  return next()
+})
 composer.command('start', async (ctx) => {
 	if (ctx.chat.type !== 'private') return;
 	await ctx.reply(

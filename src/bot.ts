@@ -14,7 +14,9 @@ for await (const file of Deno.readDir('./src/commands')) {
 	if (file.isFile && /\.(ts|js)$/.test(file.name)) {
 		try {
 			const composer = await import('./' + path.join('commands', file.name));
+			console.log("Dectect module",composer)
 			if (composer.default && composer.default instanceof Grammy.Composer) {
+			  console.log("Is Composer")
 			  composer.default as Grammy.Composer;
 				bot.use(composer.default.middleware());
 			}
