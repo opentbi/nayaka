@@ -5,7 +5,7 @@
  * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
  */
 
-import { serveHttp, webhookCallback } from './deps.ts';
+import { Grammy, serveHttp } from './deps.ts';
 import { bot } from './src/bot.ts';
 import { isDenoDeploy } from './src/util.ts';
 
@@ -16,7 +16,7 @@ if (isDenoDeploy) {
 
 			if (url.pathname.slice(1) === bot.token) {
 				try {
-					return await webhookCallback(bot, 'std/http')(request);
+					return await Grammy.webhookCallback(bot, 'std/http')(request);
 				} catch (err) {
 					console.error(err);
 				}

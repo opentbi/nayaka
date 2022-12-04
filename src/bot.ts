@@ -5,7 +5,15 @@
  * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
  */
 
-import { Bot } from '../deps.ts';
+import { Grammy } from '../deps.ts';
 import { getTelegramToken } from './util.ts';
 
-export const bot = new Bot(getTelegramToken());
+export const bot = new Grammy.Bot(getTelegramToken());
+
+bot.command(['start', 'help'], async (ctx) => {
+	await ctx.reply(`This bot is running on Deno v${Deno.version}`, {
+		reply_markup: new Grammy.InlineKeyboard()
+			.url('Repository', 'https://github.com/opentbi/nayaka')
+			.url('TBI Organization', 'https://github.com/telegrambotindonesia'),
+	});
+});
