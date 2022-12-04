@@ -19,7 +19,7 @@ export const getTelegramToken = () =>
 
 export function replacer(
 	text: string,
-	replace: { [key: string]: string },
+	replace: Record<string, string>,
 ): string {
 	for (const [key, value] of Object.entries(replace)) {
 		text = text.replace(new RegExp(key, 'gm'), value);
