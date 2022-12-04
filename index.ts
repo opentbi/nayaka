@@ -1,9 +1,10 @@
 /**
-* Copyright (c) 2022 - Nayaka Project
-* FILE INI ADALAH BAGIAN DARI NAYAKA PROJECT.
-* Nayaka merupakan Open Source Software dengan Apache License V2.
-* Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
-*/
+ * Copyright (c) 2022 - Nayaka Project
+ * FILE INI ADALAH BAGIAN DARI NAYAKA PROJECT.
+ * Nayaka merupakan Open Source Software dengan Apache License V2.
+ * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
+ */
+
 import { serveHttp, webhookCallback } from './deps.ts';
 import { bot } from './src/bot.ts';
 import { isDenoDeploy } from './src/util.ts';
