@@ -10,7 +10,7 @@ import { getTelegramToken } from './util.ts';
 
 export const bot = new Grammy.Bot(getTelegramToken());
 
-for (const file of Deno.readDirSync('./src/commands')) {
+for await (const file of Deno.readDir('./src/commands')) {
 	if (file.isFile && /\.(ts|js)$/.test(file.name)) {
 		try {
 			const composer = await import('./' + path.join('commands', file.name));
