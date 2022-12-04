@@ -1,0 +1,32 @@
+## Defining scripts for Nayaka project
+scripts:
+  # Start
+  start:
+    desc: Run Nayaka Project
+    cmd: index.ts
+    allow:
+      net: api.telegram.org
+      read: true
+      env: true
+    envFile: .env
+  # Lint
+  lint:
+    desc: Linting files
+    cmd: deno lint
+  # Copyright Generator
+  copygen:
+    desc: Generate copyright notice text to file
+    cmd: scripts/copyright-gen.ts
+    allow:
+      read: true
+      write: true
+  # Format/Prettier
+  pretty:
+    desc: Prettify the files
+    cmd: deno fmt --options-single-quote --options-use-tabs
+  # Pre-commit
+  pre-commit:
+    cmd:
+      - vr lint
+      - vr pretty
+    gitHook: pre-commit
