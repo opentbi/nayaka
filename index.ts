@@ -19,7 +19,7 @@ if (isDenoDeploy) {
 				bot,
 				'std/http',
 				'throw',
-				10_000,
+				10000,
 				secretKey,
 			)(request);
 		}
