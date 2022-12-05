@@ -1,0 +1,34 @@
+# Developer IDs
+developers:
+  - 1803044735
+
+# Custom messages
+customMessages:
+  # To disable the message, use "prohibitedLinks: false"
+  prohibitedLinks: "Naaf {{user}}, tautan tersebut berada dalam daftar hitam"
+
+  # To disable the message, use "prohibitedWords: false"
+  prohibitedWords: "Maaf {{user}}, kata dalam pesan yang anda kirim terdapat kata terlarang"
+
+  # To disable the message, use "groupPromotion: false"
+  groupPromotion: "Maaf {{user}}, promosi dalam grup ini tidak diperbolehkan ya"
+
+# Features on/off
+features:
+  # To disable, just set it to false
+  prohibitedLinks: true
+  prohibitedWords: true
+  
+  # Filter group promotions (by @tag, and links)
+  # To disable, just set it to false
+  noGroupPromotions:
+    # By tags
+    tags: true
+    # By links
+    links: true
+    
+    # Bypass hastag (#hastag)
+    bypassHastags:
+      - sharegroup
+
+# TODO: add database

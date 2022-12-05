@@ -5,7 +5,7 @@
  * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
  */
 
-import { dotenvConfig } from '../deps.ts';
+import { dotenvConfig, YAML } from '../deps.ts';
 
 export const isDenoDeploy = Deno.env.get('DENO_DEPLOYMENT_ID') !== undefined;
 
@@ -26,3 +26,15 @@ export function replacer(
 	}
 	return text;
 }
+
+export const readYamlConfig = async <T>(path: string) => {
+	const contents = await Deno.readTextFile(path);
+
+	try {
+		return YAML.parse(contents, {
+			json: true,
+		}) as T;
+	} catch {
+		return undefined;
+	}
+};
