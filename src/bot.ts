@@ -7,9 +7,28 @@
 
 import { Grammy } from '../deps.ts';
 import { getTelegramToken } from './util.ts';
-
-import { commonComposer } from './commands/commons.ts';
+import * as commands from './commands/index.ts';
 
 export const bot = new Grammy.Bot(getTelegramToken());
 
-bot.use(commonComposer);
+for (const [key, value] of Object.entries(commands)) {
+	if (value instanceof Grammy.Composer) {
+		console.log('Loaded ', key, ' module');
+		bot.use((value as Grammy.Composer).middleware());
+	}
+}
+/*for await (const file of Deno.readDir('./src/commands')) {
+	if (file.isFile && /\.(ts|js)$/.test(file.name)) {
+		try {
+			const composer = await import('./' + path.join('commands', file.name));
+			console.log("Dectect module",composer)
+			if (composer.default && composer.default instanceof Grammy.Composer) {
+			  console.log("Is Composer")
+			  composer.default as Grammy.Composer;
+				bot.use(composer.default.middleware());
+			}
+		} catch {
+			continue;
+		}
+	}
+}*/
