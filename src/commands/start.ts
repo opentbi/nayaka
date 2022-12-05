@@ -8,7 +8,7 @@
 import { Grammy } from '../../deps.ts';
 import { replacer } from '../util.ts';
 
-export const start = new Grammy.Composer();
+const start = new Grammy.Composer();
 const text =
 	'Hai {{full-name}}, saya adalah nayaka.\nSaya dapat membantu anda untuk memfilter kata, tautan, dan tagar pada grup anda dengan beberapa aturan yang dapat anda buat.\nSilakan tambahkan saya kegrup anda, dan jadikan saya administrator agar saya dapat bekerja dengan baik.';
 
@@ -18,8 +18,6 @@ start.use((ctx, next) => {
 });
 start.command('start', async (ctx) => {
 	if (ctx.chat.type !== 'private') return;
-	const text =
-		'Hai {{full-name}}, saya adalah nayaka.\nSaya dapat membantu anda untuk memfilter kata, tautan, dan tagar pada grup anda dengan beberapa aturan yang dapat anda buat.\nSilakan tambahkan saya kegrup anda, dan jadikan saya administrator agar saya dapat bekerja dengan baik.';
 	await ctx.reply(
 		replacer(text, {
 			'{{full-name}}': ctx.from?.last_name
@@ -28,13 +26,11 @@ start.command('start', async (ctx) => {
 		}),
 		{
 			reply_markup: new Grammy.InlineKeyboard()
-				.url(
-					'Tambahkan ke grup',
-					`https://t.me/${ctx.me.username}?startgroup`,
-				)
+				.url('Tambahkan ke grup', `https://t.me/${ctx.me.username}?startgroup`)
 				.row()
 				.url('Sumber Terbuka', 'https://github.com/opentbi/nayaka')
 				.url('TBI Organisasi', 'https://github.com/telegrambotindonesia'),
 		},
 	);
 });
+export default start;
