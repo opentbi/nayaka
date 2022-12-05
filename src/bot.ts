@@ -8,8 +8,8 @@
 import { Grammy } from '../deps.ts';
 import { getTelegramToken } from './util.ts';
 
-import { commonsComposer } from './commands/commons.ts';
+import { commonComposer } from './commands/commons.ts';
 
 export const bot = new Grammy.Bot(getTelegramToken());
 
-bot.use(commonsComposer);
+bot.use(commonComposer);
