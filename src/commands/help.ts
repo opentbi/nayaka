@@ -8,7 +8,7 @@
 import { Grammy } from '../../deps.ts';
 import { replacer } from '../util.ts';
 
-const help = new Grammy.Composer();
+export const help = new Grammy.Composer();
 const text =
 	'Hai {{full-name}}, Berikut adalah beberapa bantuan yang tersedia.';
 
@@ -22,4 +22,3 @@ help.command('help', async (ctx) => {
 		}),
 	);
 });
-export default help;
