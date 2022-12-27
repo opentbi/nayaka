@@ -13,7 +13,7 @@ features:
   # To disable, just set the prohibitedLinks.enabled to false
   prohibitedLinks:
     enabled: true
-    sendToGroup: false
+    sendToGroup: true
     action: delete # available: ignore, delete, kick
     links:
       - t.me

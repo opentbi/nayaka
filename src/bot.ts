@@ -55,19 +55,19 @@ bot.on(
 				if (containProhibited) {
 					if (config.features.prohibitedLinks.sendToGroup) {
 						await ctx.reply(replacer(config.customMessages.prohibitedLinks, {
-							'user': ctx.from?.username || ctx.from?.first_name!,
+							'{{user}}': ctx.from?.username || ctx.from?.first_name!,
 						}));
 					}
 					switch (config.features.prohibitedLinks.action) {
 						case 'delete':
-							await ctx.deleteMessage();
+							await ctx.deleteMessage().catch(() => {});
 							break;
 						case 'ignore':
 							break;
 						case 'kick':
 							await ctx.banAuthor({
 								'revoke_messages': true,
-							});
+							}).catch(() => {});
 							break;
 					}
 				}
