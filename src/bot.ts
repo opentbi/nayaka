@@ -13,6 +13,7 @@ import {
 	readEntities,
 	readYamlConfig,
 	replacer,
+	selfDestroyMessage,
 } from './util.ts';
 import * as commands from './commands/index.ts';
 
@@ -56,24 +57,26 @@ bot.on(
 					if (config.features.prohibitedLinks.sendToGroup) {
 						await ctx.reply(replacer(config.customMessages.prohibitedLinks, {
 							'{{user}}': ctx.from?.username || ctx.from?.first_name!,
-						}));
-					}
-					switch (config.features.prohibitedLinks.action) {
-						case 'delete':
-							await ctx.deleteMessage().catch(() => {});
-							break;
-						case 'ignore':
-							break;
-						case 'kick':
-							await ctx.banAuthor({
-								'revoke_messages': true,
-							}).catch(() => {});
-							break;
+						})).then((m) =>
+							selfDestroyMessage(bot.api.deleteMessage.bind(bot.api), m)
+						);
+						switch (config.features.prohibitedLinks.action) {
+							case 'delete':
+								await ctx.deleteMessage().catch(() => {});
+								break;
+							case 'ignore':
+								break;
+							case 'kick':
+								await ctx.banAuthor({
+									'revoke_messages': true,
+								}).catch(() => {});
+								break;
+						}
 					}
 				}
-			}
 
-			// soon...
+				// soon...
+			}
 		}
 	},
 );

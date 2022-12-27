@@ -8,7 +8,8 @@
 import { dotenvConfig, Grammy, GrammyTypes, YAML } from '../deps.ts';
 
 export const isDenoDeploy = Deno.env.get('DENO_DEPLOYMENT_ID') !== undefined;
-
+export const delay = (ms: number) =>
+	new Promise((resolve) => setTimeout(resolve, ms));
 export const getSecretToken = () =>
 	Deno.env.get('WEBHOOK_SECRET') ||
 	dotenvConfig({ safe: true }).WEBHOOK_SECRET;
@@ -72,4 +73,11 @@ export const readEntities = (
 	}
 
 	return targets;
+};
+export const selfDestroyMessage = async (
+	deleteMessage: Grammy.Api<Grammy.RawApi>['deleteMessage'],
+	m: GrammyTypes.Message.TextMessage,
+): Promise<void> => {
+	await delay(5000);
+	await deleteMessage(m.chat.id, m.message_id).catch(() => {});
 };
