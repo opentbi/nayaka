@@ -14,6 +14,6 @@ export const bot = new Grammy.Bot(getTelegramToken());
 for (const [key, value] of Object.entries(commands)) {
 	if (value instanceof Grammy.Composer) {
 		console.log('Loaded module:', key);
-		bot.use((value as Grammy.Composer).middleware());
+		bot.use(value.middleware());
 	}
 }
