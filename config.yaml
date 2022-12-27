@@ -4,31 +4,42 @@ developers:
 
 # Custom messages
 customMessages:
-  # To disable the message, use "prohibitedLinks: false"
-  prohibitedLinks: "Naaf {{user}}, tautan tersebut berada dalam daftar hitam"
-
-  # To disable the message, use "prohibitedWords: false"
+  prohibitedLinks: "Maaf {{user}}, tautan tersebut berada dalam daftar hitam"
   prohibitedWords: "Maaf {{user}}, kata dalam pesan yang anda kirim terdapat kata terlarang"
-
-  # To disable the message, use "groupPromotion: false"
   groupPromotion: "Maaf {{user}}, promosi dalam grup ini tidak diperbolehkan ya"
 
 # Features on/off
 features:
-  # To disable, just set it to false
-  prohibitedLinks: true
-  prohibitedWords: true
+  # To disable, just set the prohibitedLinks.enabled to false
+  prohibitedLinks:
+    enabled: true
+    sendToGroup: false
+    action: delete # available: ignore, delete, kick
+
+  # To disable, just set the prohibitedWors.enabled to false
+  prohibitedWords:
+    enabled: true
+    sendToGroup: false
+    action: delete # available: ignore, delete, kick
   
   # Filter group promotions (by @tag, and links)
-  # To disable, just set it to false
+  # To disable, just set the noGroupPromotions.enabled to false
   noGroupPromotions:
+    # Enabled status
+    enabled: true
     # By tags
     tags: true
     # By links
     links: true
+
+    # Message, set it to false if you won't send message to the group
+    messageEnabled: true
+
+    # Action
+    action: delete # available: delete, ignore, kick
+
+    # 
     
     # Bypass hastag (#hastag)
     bypassHastags:
       - sharegroup
-
-# TODO: add database
