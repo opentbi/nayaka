@@ -4,7 +4,7 @@
  * Nayaka merupakan Open Source Software dengan Apache License V2.
  * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
  */
-import type { Grammy } from '../../deps.ts';
+import { GQLQueryBuilder, Grammy } from '../../deps.ts';
 import { sendFaunaQuery } from '../database/fauna.ts';
 import type { NayakaContext, NayakaSessionData } from '../types/grammy.ts';
 
@@ -17,26 +17,41 @@ export const groupSessionMiddleware: Grammy.Middleware<NayakaContext> = async (
 	}, {
 		group: NayakaSessionData['group'];
 	}>(
-		`
-		query($id: String!) {
-			group: findGroupById(id: $id) {
-				id
-			}
-		}
-	`,
+		GQLQueryBuilder.query({
+			operation: {
+				name: 'findGroupById',
+				alias: 'group',
+			},
+			fields: ['id'],
+			variables: {
+				id: {
+					value: '',
+					required: true,
+				},
+			},
+		}).query,
 		{ id: ctx.chat!.id.toString() },
 	);
 
 	if (!data.group) {
-		await sendFaunaQuery<{ id: string }, { group: { id: string } }>(
-			`
-			mutation($id: String!) {
-				group: createGroup(data: { id: $id }) {
-					id
-				}
-			}
-		`,
-			{ id: ctx.chat!.id.toString() },
+		await sendFaunaQuery<{ data: { id: string } }, { group: { id: string } }>(
+			GQLQueryBuilder.mutation({
+				operation: {
+					name: 'createGroup',
+					alias: 'group',
+				},
+				fields: ['id'],
+				variables: {
+					data: {
+						value: {
+							id: '',
+						},
+						type: 'GroupInput',
+						required: true,
+					},
+				},
+			}).query,
+			{ data: { id: ctx.chat!.id.toString() } },
 		);
 	}
 
