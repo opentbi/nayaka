@@ -53,7 +53,7 @@ type GroupSettings @collection(name: "group-settings") {
 
 # Group
 type Group @collection(name: "groups") {
-    id: Int!
+    id: String!
     settings: GroupSettings! @relation
     
     links: [ProhibitedLink] @relation
@@ -61,5 +61,5 @@ type Group @collection(name: "groups") {
 }
 
 type Query {
-    findGroupByID(id: Int!): Group @resolver(name: "group") @index(name: "id")
+    findGroupById(id: String!): Group @index(name: "id")
 }
