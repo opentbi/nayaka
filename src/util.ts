@@ -5,7 +5,7 @@
  * Anda dapat mengedit atau mendistribusikan ulang sesuai dengan syarat dan ketentuan dari Apache License.
  */
 
-import { dotenvConfig, YAML } from '../deps.ts';
+import { dotenvConfig, Grammy, GrammyTypes, YAML } from '../deps.ts';
 
 export const isDenoDeploy = Deno.env.get('DENO_DEPLOYMENT_ID') !== undefined;
 
@@ -39,4 +39,37 @@ export const readYamlConfig = async <T>(path: string) => {
 	} catch {
 		return undefined;
 	}
+};
+
+export const readEntities = (
+	ctx: Grammy.Context,
+	type: GrammyTypes.MessageEntity['type'][],
+): string[] => {
+	let targets: string[] = [];
+
+	const userEntity = (user: GrammyTypes.User): string => {
+		return user.username
+			? `https://t.me/${user.username}`
+			: 'tg://user?id=' + user.id;
+	};
+	const parseEntities = (str: string, ents: GrammyTypes.MessageEntity[]) => {
+		ents = ents.filter((e) =>
+			type.indexOf(e.type) != -1 && ('user' in e ? !e.user.is_bot : true)
+		);
+		return ents.map((e) =>
+			'url' in e
+				? e.url
+				: 'user' in e
+				? userEntity(e.user)
+				: str.slice(e.offset, e.offset + e.length)
+		);
+	};
+
+	if (ctx.msg?.caption && ctx.msg?.caption_entities) {
+		targets = parseEntities(ctx.msg.caption, ctx.msg.caption_entities);
+	} else if (ctx.msg?.text && ctx.msg?.entities) {
+		targets = parseEntities(ctx.msg.text, ctx.msg.entities);
+	}
+
+	return targets;
 };

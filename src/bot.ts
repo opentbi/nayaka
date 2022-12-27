@@ -6,10 +6,21 @@
  */
 
 import { Grammy } from '../deps.ts';
-import { getTelegramToken } from './util.ts';
+import { getTelegramToken, readEntities } from './util.ts';
 import * as commands from './commands/index.ts';
 
 export const bot = new Grammy.Bot(getTelegramToken());
+bot.on(['message::mention', 'message::url'], async (ctx) => {
+	const targets = readEntities(ctx, [
+		'url',
+		'mention',
+		'text_mention',
+		'text_link',
+	]);
+	await ctx.reply(`\`\`\`${JSON.stringify(targets)}\`\`\``, {
+		parse_mode: 'Markdown',
+	});
+});
 
 for (const [key, value] of Object.entries(commands)) {
 	if (value instanceof Grammy.Composer) {

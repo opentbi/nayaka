@@ -17,6 +17,6 @@ export const sendFaunaQuery = async <B, V>(
 	});
 
 	const { data, errors } = await response.json();
-	if (errors) throw new Error(errors[0]);
+	if (errors) throw new Error(JSON.stringify(errors));
 	else return data;
 };
