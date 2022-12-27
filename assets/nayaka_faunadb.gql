@@ -1,18 +1,20 @@
 # Prohibited Word
-type ProhibitedWord {
+type ProhibitedWord @collection(name: "words") {
     patterns: [String] # regex patterns
     patternFlag: String 
     
     words: [String]
     caseSensitive: Boolean
+    group: Group! @relation
 }
 
 # Prohibited Links
-type ProhibitedLink {
+type ProhibitedLink @collection(name: "links") {
     patterns: [String]
     patternFlag: String
 
     cleanUrls: [String] # cleanup urls (e.g subdo.domain.com, domain.com)
+    group: Group! @relation
 }
 
 # GroupSetting action
@@ -23,19 +25,13 @@ enum GroupSettingAction {
 }
 
 # Group Settings
-interface IGroupSetting {
+type GroupSetting {
     enabled: Boolean!
     sendToGroup: Boolean!
     action: GroupSettingAction!
 }
 
-type GroupSetting implements IGroupSetting {
-    enabled: Boolean!
-    sendToGroup: Boolean!
-    action: GroupSettingAction!
-}
-
-type GroupPromotionSetting implements IGroupSetting {
+type GroupPromotionSetting {
     enabled: Boolean!
     sendToGroup: Boolean!
     action: GroupSettingAction!
@@ -46,18 +42,24 @@ type GroupPromotionSetting implements IGroupSetting {
 }
 
 # GroupSettings
-type GroupSettings {
+type GroupSettings @collection(name: "group-settings") {
     prohibitedLinks: GroupSetting!
     prohibitedWords: GroupSetting!
 
     promotion: GroupPromotionSetting!
+
+    group: Group! @relation
 }
 
 # Group
-type Group {
+type Group @collection(name: "groups") {
     id: Int!
-    settings: GroupSettings!
+    settings: GroupSettings! @relation
     
-    links: [ProhibitedLink]!
-    words: [ProhibitedWord]!
+    links: [ProhibitedLink] @relation
+    words: [ProhibitedWord] @relation
+}
+
+type Query {
+    findGroupByID(id: Int!): Group @resolver(name: "group") @index(name: "id")
 }
