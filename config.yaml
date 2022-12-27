@@ -37,8 +37,6 @@ features:
 
     # Action
     action: delete # available: delete, ignore, kick
-
-    # 
     
     # Bypass hastag (#hastag)
     bypassHastags:
