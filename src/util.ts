@@ -12,7 +12,9 @@ export const isDenoDeploy = Deno.env.get('DENO_DEPLOYMENT_ID') !== undefined;
 export const getSecretToken = () =>
 	Deno.env.get('WEBHOOK_SECRET') ||
 	dotenvConfig({ safe: true }).WEBHOOK_SECRET;
-
+export const getFaunaSecret = (): string =>
+	Deno.env.get('FAUNADB_SECRET') ||
+	dotenvConfig({ safe: true }).FAUNADB_SECRET;
 export const getTelegramToken = () =>
 	Deno.env.get('TELEGRAM_BOT_TOKEN') ||
 	dotenvConfig({ safe: true }).TELEGRAM_BOT_TOKEN;
