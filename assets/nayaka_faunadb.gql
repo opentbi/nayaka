@@ -23,16 +23,34 @@ enum GroupSettingAction {
 }
 
 # Group Settings
-type GroupSetting {
+interface IGroupSetting {
     enabled: Boolean!
     sendToGroup: Boolean!
     action: GroupSettingAction!
+}
+
+type GroupSetting implements IGroupSetting {
+    enabled: Boolean!
+    sendToGroup: Boolean!
+    action: GroupSettingAction!
+}
+
+type GroupPromotionSetting implements IGroupSetting {
+    enabled: Boolean!
+    sendToGroup: Boolean!
+    action: GroupSettingAction!
+
+    byTags: Boolean!
+    byLinks: Boolean!
+    bypassHastag: [String]!
 }
 
 # GroupSettings
 type GroupSettings {
     prohibitedLinks: GroupSetting!
     prohibitedWords: GroupSetting!
+
+    promotion: GroupPromotionSetting!
 }
 
 # Group
