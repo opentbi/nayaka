@@ -1,0 +1,45 @@
+# Prohibited Word
+type ProhibitedWord {
+    patterns: [String] # regex patterns
+    patternFlag: String 
+    
+    words: [String]
+    caseSensitive: Boolean
+}
+
+# Prohibited Links
+type ProhibitedLink {
+    patterns: [String]
+    patternFlag: String
+
+    cleanUrls: [String] # cleanup urls (e.g subdo.domain.com, domain.com)
+}
+
+# GroupSetting action
+enum GroupSettingAction {
+    Delete,
+    Ignore,
+    Kick
+}
+
+# Group Settings
+type GroupSetting {
+    enabled: Boolean!
+    sendToGroup: Boolean!
+    action: GroupSettingAction!
+}
+
+# GroupSettings
+type GroupSettings {
+    prohibitedLinks: GroupSetting!
+    prohibitedWords: GroupSetting!
+}
+
+# Group
+type Group {
+    id: Int!
+    settings: GroupSettings!
+    
+    links: [ProhibitedLink]!
+    words: [ProhibitedWord]!
+}

@@ -15,12 +15,17 @@ features:
     enabled: true
     sendToGroup: false
     action: delete # available: ignore, delete, kick
+    links:
+      - t.me
+      - /(*\.domain\.com)/gi
 
   # To disable, just set the prohibitedWors.enabled to false
   prohibitedWords:
     enabled: true
     sendToGroup: false
     action: delete # available: ignore, delete, kick
+    words:
+      - this-is-badword
   
   # Filter group promotions (by @tag, and links)
   # To disable, just set the noGroupPromotions.enabled to false
@@ -41,3 +46,7 @@ features:
     # Bypass hastag (#hastag)
     bypassHastags:
       - sharegroup
+
+# applied groups config (without setup)
+appliedGroupsConfig:
+  - 00000000
