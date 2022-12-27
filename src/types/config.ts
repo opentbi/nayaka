@@ -28,5 +28,5 @@ export interface IConfig {
 	developers: string[];
 	customMessages: Record<string, string>;
 	features: Feature;
-	appliedGroupsConfig: string[];
+	appliedGroupsConfig: number[];
 }

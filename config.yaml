@@ -17,7 +17,7 @@ features:
     action: delete # available: ignore, delete, kick
     links:
       - t.me
-      - /(*\.domain\.com)/gi
+      - regex:(.*\.domain\.com)##flag:gi
 
   # To disable, just set the prohibitedWors.enabled to false
   prohibitedWords:
@@ -49,4 +49,4 @@ features:
 
 # applied groups config (without setup)
 appliedGroupsConfig:
-  - 00000000
+  - -1001513846226

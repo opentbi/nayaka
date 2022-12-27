@@ -58,7 +58,7 @@ export const readEntities = (
 		);
 		return ents.map((e) =>
 			'url' in e
-				? e.url
+				? 'dom:' + new URL(e.url).host
 				: 'user' in e
 				? userEntity(e.user)
 				: str.slice(e.offset, e.offset + e.length)
